@@ -42,5 +42,23 @@ public class PlayerControllerExam05 : MonoBehaviour
         {
             Instantiate(projectilePrefab, transform.position, transform.rotation);
         }
+
+        //check if shoot action is triggered and there are bullets available
+        if (shootAction.triggered && maxBulletCount > 0)
+        {
+            Instantiate(projectilePrefab, transform.position, transform.rotation);
+            maxBulletCount--;
+        }
+
+        // Regenerate bullets over time if the count is zero or less
+        if (maxBulletCount <= 0)
+        {
+            bulletRegenerateCooldown -= Time.deltaTime;
+            if (bulletRegenerateCooldown <= 0f)
+            {
+                maxBulletCount+= 10;
+                bulletRegenerateCooldown = 5f; // Reset cooldown
+            }
+        }
     }
 }
